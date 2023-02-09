@@ -55,7 +55,6 @@ app.put("/api/persons/:id", (request, response, next) => {
   const id = request.params.id;
   const person = request.body;
 
-  console.log(person);
 
   Person.findByIdAndUpdate(id, person, { new: true })
     .then((person) => {
@@ -90,7 +89,6 @@ app.post("/api/persons", (request, response) => {
 
   const newPerson = new Person(person);
   newPerson.save().then((person) => {
-    console.log(person);
     response.json(person);
   });
 });
