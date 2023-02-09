@@ -7,7 +7,7 @@ const Person = require('./models/person')
 const app = express()
 
 morgan.token('content', (req) => {
-  if (req.method === 'POST') {
+  if (req.method === 'POST'|| req.method==='PUT') {
     return JSON.stringify(req.body)
   }
   return ''
@@ -77,7 +77,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
 app.post('/api/persons', async (request, response, next) => {
   const person = request.body
 
-  const persons = await Person.find({ name:{ '$regex' : `${request.body.name}`, '$options' : 'i' } }).exec()
+  const persons = await Person.find({ name:{ '$regex' : `^${request.body.name}$`, '$options' : 'i' } }).exec()
 
   if(persons.length>=1){
     return response.status(400).json({ error:'person with this name already exist' })
